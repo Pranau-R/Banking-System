@@ -1,0 +1,37 @@
+/'
+Module:	display_acc_details.plantuml
+Function:
+        PlantUML source for displaying mini statement of account.
+
+Copyright:
+        This file copyright (C) 2022 by
+        MCCI Corporation
+        3520 Krums Corners Road
+        Ithaca, NY 14850
+        An unpublished work. All rights reserved.
+        This file is proprietary information, and may not be disclosed or
+        copied without the prior permission of MCCI Corporation.
+
+Author:
+        Pranau R, MCCI Corporation    April 2022
+'/
+
+@startuml
+
+start
+
+:B;
+if (is file exist?) then (yes)
+:Open the text file;
+:Read all the characters present in the files line by line 
+                            till it reaches end of file;
+:Close the file;
+
+else (no)
+:Print file not exist statement;
+
+endif
+
+:O;
+
+@enduml

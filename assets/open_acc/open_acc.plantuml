@@ -1,0 +1,41 @@
+/'
+Module:	open_acc.plantuml
+Function:
+        PlantUML source for opening a bank account operation.
+
+Copyright:
+        This file copyright (C) 2022 by
+        MCCI Corporation
+        3520 Krums Corners Road
+        Ithaca, NY 14850
+        An unpublished work. All rights reserved.
+        This file is proprietary information, and may not be disclosed or
+        copied without the prior permission of MCCI Corporation.
+
+Author:
+        Pranau R, MCCI Corporation    April 2022
+'/
+
+@startuml
+
+start
+
+:A;
+:Get basic information from user;
+:Store those information in respective variables;
+
+if (is file exist?) then (yes)
+:Open a text file;
+:Now write or append all the information in it;
+:Close the file;
+
+else (no)
+:Create a new text file;
+:Now write or append all the information in it;
+:Close the file;
+
+endif
+
+:O;
+
+@enduml

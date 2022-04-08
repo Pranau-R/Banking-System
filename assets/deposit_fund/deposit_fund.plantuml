@@ -1,0 +1,33 @@
+/'
+Module:	deposit_fund.plantuml
+Function:
+        PlantUML source for depositing fund operation.
+
+Copyright:
+        This file copyright (C) 2022 by
+        MCCI Corporation
+        3520 Krums Corners Road
+        Ithaca, NY 14850
+        An unpublished work. All rights reserved.
+        This file is proprietary information, and may not be disclosed or
+        copied without the prior permission of MCCI Corporation.
+
+Author:
+        Pranau R, MCCI Corporation    April 2022
+'/
+
+@startuml
+
+start
+
+:C;
+:Get the amount needed to be deposited and store it in a variable;
+:Now sum the existing balance amount and the newly added amount
+        i.e, New balance <- Existing Balance + Deposited Amount;
+:Open the existing file;
+:Write the new balance amount;
+:Display a successful message;
+:Close the file;
+:O;
+
+@enduml
