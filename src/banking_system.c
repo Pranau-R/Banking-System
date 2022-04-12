@@ -22,7 +22,7 @@ struct user
     {
     char name[20];
     char mob[12];
-    //char pass[15];
+    char pass[15];
     char type[10];
     double balance;
     };
@@ -55,7 +55,7 @@ void main()
     //char num[50];
     //char cash[50];
     int ch;
-    printf("\n---You selected Account Details---\n\n");
+    //printf("\n---You selected Account Details---\n\n");
 
     /*printf("\nEnter your Registered Mobile Number:\n");
     scanf("%s", num);
@@ -145,11 +145,10 @@ void open ()
     {
     FILE *fp;
     struct user user;
+    char filename[12];
     user.balance = 0;
 
     //printf("Balance is: %lf\n", user.balance);    
-
-    fp = fopen("username.txt", "ab");
 
     system("cls");
 
@@ -166,8 +165,12 @@ void open ()
     printf("\n\nEnter Account Type:\t");
     scanf("%s", user.type);
 
-    /*printf("\n\nEnter a Password:\t");
-    scanf("%s", user.pass);*/
+    printf("\n\nEnter a Password:\t");
+    scanf("%s", user.pass);
+
+    strcpy(filename, user.mob);
+
+    fp = fopen(strcat(filename, ".txt"), "w");
 
     fwrite(&user, sizeof(user), 1, fp);
 
@@ -206,59 +209,62 @@ void display()
     FILE *fp;
     struct user user;
     char num[12];
+    char passwd[15];
 
     printf("\n---You selected Account Details---\n\n");
     printf("\nEnter your Registered Mobile Number:\n");
     scanf("%s", num);
 
-    printf("\n\nName is: %s\n", user.name);
-    printf("the num is:%s\n", num);
-    fp = fopen("username.txt", "rb");
-    fread(&user, sizeof(user), 1, fp);
+    printf("\nEnter your Password:\n");
+    scanf("%s", passwd);
 
-    printf("\n\nFRName is: %s\n", user.name);
-    printf("the user.mob is:%s\n", user.mob);
 
-    if (strcmp(num, user.mob) != 0)
+    //printf("\n\nName is: %s\n", user.name);
+    //printf("the num is:%s\n", num);
+    fp = fopen(strcat(num, ".txt"), "r");
+
+    //fread(&user, sizeof(user), 1, fp);
+
+    //printf("\n\nFRName is: %s\n", user.name);
+    //printf("the user.mob is:%s\n", user.mob);
+    if (fp == NULL)
         {
-        printf("the user.mob is:%s\n", user.mob);
-        printf("\nThe Mobile Number you entered is not registered!...\n");
-
-        printf("Press any key to Display Main Menu...!\n\n");
-        getch();
+        printf("Account Number not registered!\n");
         }
     else
         {
-        system("cls");
-        printf("MINI STATEMENT!\n\n");
-    
-        if (fp == NULL)
-            {
-            printf("Error occurred while opening the file\n");
-            }
-        //while (fread(&user, sizeof(user), 1, fp)) 
-        else if(strcmp(num, user.mob) == 0) 
-            {
-            printf("WELCOME, %s", user.name);
-            printf("\n\n..........................\n");
-            printf("==== YOUR ACCOUNT INFO ====\n");
-            printf("***************************\n");
-            printf("\nNAME: %s", user.name);
+        fread(&user, sizeof(user), 1, fp);
+            if (strcmp(passwd, user.pass) == 0)
+                {
+                system("cls");
+                printf("MINI STATEMENT!\n\n");
 
-            printf("\nMobile Number: %s", user.mob);
+                printf("WELCOME, %s", user.name);
+                printf("\n\n..........................\n");
+                printf("==== YOUR ACCOUNT INFO ====\n");
+                printf("***************************\n");
+                printf("\nNAME: %s", user.name);
 
-            printf("\nAccount Type: %s", user.type);
+                printf("\nMobile Number: %s", user.mob);
 
-            printf("\nBalance: %lfRs\n\n", user.balance);
+                printf("\nAccount Type: %s", user.type);
 
-            printf("Press any key to Display Main Menu...!\n\n");
-            getch();
+                printf("\nBalance: %lfRs\n\n", user.balance);
+
+                printf("Press any key to Display Main Menu...!\n\n");
+                getch();
+                }
+            else
+                { 
+                //printf("the user.mob is:%s\n", user.mob);
+                printf("\nIncorect Password!!.\n");
+
+                printf("Press any key to Display Main Menu...!\n\n");
+                getch();
             }
         }
     fclose(fp);
     }
-
-
 
 /****************************************************************************\
 |
@@ -285,45 +291,64 @@ void deposit()
     struct user user;
     int amount;
     char num[12];
+    char passwd[15];
 
-    printf("\n---You Selected Cash Deposit---\n");
-
+    printf("\n---You Selected Cash Deposit---\n\n");
     printf("\nEnter your Registered Mobile Number:\n");
     scanf("%s", num);
 
-    if (strcmp(num, user.mob) != 0)
+    printf("\nEnter your Password:\n");
+    scanf("%s", passwd);
+
+    fp = fopen(strcat(num, ".txt"), "r+");
+
+    if (fp == NULL)
         {
-        printf("\nThe Mobile Number you entered is not registered!...\n");
-        printf("Process Failed!!!...\n");
-        printf("\nPress any key to Display Main Menu...!\n\n");
-        getch();
+        printf("Account Number not registered!\n");
         }
     else
         {
-        system("cls");
-
-        printf("CASH DEPOSIT!\n\n");
-        printf("Hello! %s \n", user.name);
-
-        printf("Enter the amount to be deposited:\n");
-        scanf("%d", &amount);
-
-        user.balance += amount;
-
-        fp = fopen("username.txt", "wb");
-        fwrite(&user,sizeof(struct user),1,fp);
-
-        if(fwrite != 0)
+        if (strcmp(passwd, user.pass) == 0)
             {
-            printf("\n\nYou have depostied Rs.%d",amount);
-            printf("\nYour Amount is Successfully Deposited\n");
+            deposit:
+            system("cls");
+
+            printf("CASH DEPOSIT!\n\n");
+            printf("Hello! %s \n", user.name);
+
+            printf("Enter the amount to be deposited:\n");
+            scanf("%d", &amount);
+
+            if (amount % 500 != 0)
+                {
+                printf("\nSorry... The amount should be multiple of 500");
+                printf("\nPress any key to redirect to CASH DEPOSIT!...");
+
+                getch();
+                goto deposit;
+                }
+            else
+                {
+                user.balance += amount;
+
+                fwrite(&user,sizeof(struct user),1,fp);
+
+                if(fwrite != 0)
+                    {
+                    printf("\n\nYou have successfully depostied Rs.%d",amount);
+                    printf("\nAvailable Balance: %lf \n", user.balance);
+                    }
+                }
             }
-
-        fclose(fp);
-
-        printf("\nPress any key to Display Main Menu...!\n\n");
-        getch();
+        else
+            {
+            printf("\nIncorect Password!!.\n");
+            }
         }
+    fclose(fp);
+
+    printf("\nPress any key to Display Main Menu...!\n\n");
+    getch();
     }
 
 /****************************************************************************\
@@ -351,55 +376,74 @@ void withdraw ()
     struct user user;
     int amount;
     char num[12];
+    char passwd[15];
 
-    printf("\n---You Selected Cash Deposit---\n");
+    printf("\n---You Selected Cash Withdrawl---\n");
 
     printf("\nEnter your Registered Mobile Number:\n");
     scanf("%s", num);
 
-    if (strcmp(num, user.mob) != 0)
+    printf("\nEnter your Password:\n");
+    scanf("%s", passwd);
+
+    fp = fopen(strcat(num, ".txt"), "r+");
+
+    if (fp == NULL)
         {
-        printf("\nThe Mobile Number you entered is not registered!...\n");
-        printf("Process Failed!!!...\n");
-        printf("\nPress any key to Display Main Menu...!\n\n");
-        getch();
+        printf("Account Number not registered!\n");
         }
     else
         {
-        system("cls");
-
-        printf("CASH WITHDRAWL!\n\n");
-        printf("Hello! %s \n", user.name);
-
-        printf("Available Balance: %s \n", user.balance);
-        printf("Enter the amount to be withdrawn:\n");
-        scanf("%d", &amount);
-
-        if (amount % 500 != 0)
+        if (strcmp(passwd, user.pass) == 0)
             {
-            printf("\nSorry amount should be multiple of 500");
-            }
-        else if (amount > user.balance)
-            {
-            printf("\nSorry insufficient balance");
+            withdraw:
+
+            system("cls");
+            printf("CASH WITHDRAWL!\n\n");
+            printf("Hello! %s \n", user.name);
+
+            printf("Available Balance: %lf \n", user.balance);
+            printf("Enter the amount to be withdrawn:\n");
+            scanf("%d", &amount);
+
+            if (amount % 500 != 0)
+                {
+                printf("\nSorry... The amount should be multiple of 500");
+                printf("\nPress any key to redirect to CASH WITHDRAWL!...");
+
+                getch();
+                goto withdraw;
+                }
+            else if (amount > user.balance)
+                {
+                printf("\nSorry insufficient balance");
+                printf("\nPress any key to redirect to CASH WITHDRAWL!...");
+                getch();
+                goto withdraw;
+                }
+            else
+                {
+                user.balance -= amount;
+
+                fwrite(&user, sizeof(struct user), 1, fp);
+
+                if(fwrite !=0)
+                    {
+                    printf("\n\nYou have sucessfully withdrawn Rs.%d",amount);
+                    printf("\nAvailable Balance: %lf \n", user.balance);
+                    }
+                }
             }
         else
             {
-            user.balance -= amount;
+            printf("\nIncorect Password!!.\n");
             }
-
-        fp = fopen("username.txt","w");
-
-        fwrite(&user, sizeof(struct user), 1, fp);
-
-        if(fwrite !=0)
-            {
-            printf("\n\nYou have withdrawn Rs.%d",amount);
-            }
-        fclose(fp);
         }
-    }
+    fclose(fp);
 
+    printf("\nPress any key to Display Main Menu...!\n\n");
+    getch();
+    }
 /*
 Name: close()
 Function:
@@ -419,42 +463,48 @@ void close()
     struct user user;
     int amount;
     char num[12];
+    char passwd[15];
 
     printf("\n---You Selected Account Deletion---\n");
     printf("\nEnter your Registered Mobile Number:\n");
     scanf("%s", num);
 
-    if (strcmp(num, user.mob) != 0)
+    printf("\nEnter your Password:\n");
+    scanf("%s", passwd);
+
+    old = fopen(strcat(num, ".txt"), "r+");;
+
+    if (old == NULL)
         {
-        printf("\nThe Mobile Number you entered is not registered!...\n");
-        printf("Process Failed!!!...\n");
-        printf("\nPress any key to Display Main Menu...!\n\n");
-        getch();
+        printf("Account Number not registered!\n");
         }
     else
         {
-        system("cls");
-
-        printf("CLOSE ACCOUNT!\n\n");
-        printf("Hello! %s \n", user.name);
-
-        old = fopen("username.txt","r");
-        new=fopen("new.txt","w");
-
-        while (fscanf(old,"%s %s %s %s %s %s",user.name, user.mob, user.type, user.balance, user.type) != EOF)
+        if (strcmp(passwd, user.pass) == 0)
             {
-            if(strcmp(num, user.mob) != 0)
+            system("cls");
+
+            printf("CLOSE ACCOUNT!\n\n");
+            printf("Hello! %s \n", user.name);
+
+            //old = fopen("username.txt","r");
+            new = fopen("new.txt","w");
+
+            while (fscanf(old,"%s %s %s %s %s %s",user.name, user.mob, user.type, user.balance, user.type, user.pass) != EOF)
                 {
-                fprintf(new,"%s %s %s %s %s %s",user.name, user.mob, user.type, user.balance, user.type);
+                if(strcmp(passwd, user.pass) != 0)
+                    {
+                    fprintf(new,"%s %s %s %s %s %s",user.name, user.mob, user.type, user.balance, user.type, user.pass);
+                    }
+                else
+                    {
+                    printf("\n\n Your Account DELETED successfully!\n\n");
+                    }
                 }
-            else
-                {
-                printf("\nAccount deleted successfully!\n");
-                }
+            fclose(new);
             }
-        fclose(old);
-        fclose(new);
-        remove("username.txt");
-        rename("new.txt","username.txt");
         }
+    fclose(old);
+    remove(strcat(num, ".txt"));
+    rename("new.txt", strcat(num, ".txt"));
     }
