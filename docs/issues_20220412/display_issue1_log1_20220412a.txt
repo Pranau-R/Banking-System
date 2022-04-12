@@ -1,0 +1,64 @@
+PS E:\Training\GitHub\Banking-System\issue1\Banking-System\src> cd "e:\Training\GitHub\Banking-System\issue1\Banking-System\src\" ; if ($?) { gcc banking_system.c -o banking_system } ; if ($?) { .\banking_system }
+banking_system.c: In function 'display':
+banking_system.c:247:13: warning: implicit declaration of function 'getch'; did you mean 'getc'? [-Wimplicit-function-declaration]
+  247 |             getch();
+      |             ^~~~~
+      |             getc
+
+--------------------------------------------------------------------------------
+This is banking_system.exe v1.0.0
+--------------------------------------------------------------------------------
+
+It can able to create and maintain a Bank Acccount
+An interactive menu is given to perform various operations as per user's need. Now...
+
+
+======== WELCOME TO MCCI BANK!!! ========
+======== WHAT DO YOU WANT TO DO? ========
+
+1. Open Account:
+2. Account Details:
+MINI STATEMENT!
+
+WELCOME, jana
+
+..........................
+==== YOUR ACCOUNT INFO ====
+***************************
+
+NAME: jana
+Mobile Number: 1010
+Account Type: 17
+Balance: 0.000000Rs
+
+Press any key to Display Main Menu...!
+
+the user.mob is:
+
+The Mobile Number you entered is not registered!...
+Press any key to Display Main Menu...!
+
+
+======== WELCOME TO MCCI BANK!!! ========
+======== WHAT DO YOU WANT TO DO? ========
+
+1. Open Account:
+2. Account Details:
+3. Deposit Fund:
+4. Withdraw Fund:
+5. Close Account:
+6. Exit:
+
+
+Enter the Choice:
+2
+
+---You selected Account Details---
+
+
+Enter your Registered Mobile Number:
+81
+the user.mob is:1010
+
+The Mobile Number you entered is not registered!...
+Press any key to Display Main Menu...!
