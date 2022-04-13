@@ -172,9 +172,11 @@ void open ()
 
     fp = fopen(strcat(filename, ".txt"), "w");
 
+    //fprintf(fp,"\n Username : %s \n Mobile Number : %s \n Account Type : %s \n Password : %s \n Balance : %lf", user.name, user.mob, user.type, user.pass, user.balance);
+
     fwrite(&user, sizeof(user), 1, fp);
 
-    if(fwrite != 0)
+    if(fprintf > 0)
         {
         printf("\nAccount Succesfully Created!\n\n");
         }
@@ -196,10 +198,7 @@ Name: display()
 Function:
         To display a mini statement.
 Definition:
-        void display(char mobnum[]);
-Parameters and Arguments:
-        A character array is passed as argument. By comparing this array with file's data (unique mobile number),
-        the function displays required user's details.
+        void display();
 Returns:
         Functions returning type void: nothing.
 */
@@ -218,15 +217,8 @@ void display()
     printf("\nEnter your Password:\n");
     scanf("%s", passwd);
 
-
-    //printf("\n\nName is: %s\n", user.name);
-    //printf("the num is:%s\n", num);
     fp = fopen(strcat(num, ".txt"), "r");
 
-    //fread(&user, sizeof(user), 1, fp);
-
-    //printf("\n\nFRName is: %s\n", user.name);
-    //printf("the user.mob is:%s\n", user.mob);
     if (fp == NULL)
         {
         printf("Account Number not registered!\n");
@@ -234,33 +226,32 @@ void display()
     else
         {
         fread(&user, sizeof(user), 1, fp);
-            if (strcmp(passwd, user.pass) == 0)
-                {
-                system("cls");
-                printf("MINI STATEMENT!\n\n");
+        if (strcmp (passwd, user.pass) == 0)
+            {
+            system("cls");
+            printf("\n\nMINI STATEMENT!\n\n");
 
-                printf("WELCOME, %s", user.name);
-                printf("\n\n..........................\n");
-                printf("==== YOUR ACCOUNT INFO ====\n");
-                printf("***************************\n");
-                printf("\nNAME: %s", user.name);
+            printf("WELCOME, %s", user.name);
+            printf("\n\n...........................\n");
+            printf("==== YOUR ACCOUNT INFO ====\n");
+            printf("***************************\n");
+            printf("\nNAME: %s", user.name);
 
-                printf("\nMobile Number: %s", user.mob);
+            printf("\nMobile Number: %s", user.mob);
 
-                printf("\nAccount Type: %s", user.type);
+            printf("\nAccount Type: %s", user.type);
 
-                printf("\nBalance: %lfRs\n\n", user.balance);
+            printf("\nBalance: %.2lfRs\n\n", user.balance);
 
-                printf("Press any key to Display Main Menu...!\n\n");
-                getch();
-                }
-            else
-                { 
-                //printf("the user.mob is:%s\n", user.mob);
-                printf("\nIncorect Password!!.\n");
+            printf("Press any key to Display Main Menu...!\n\n");
+            getch();
+            }
+        else
+            {
+            printf("\nIncorect Password!!.\n");
 
-                printf("Press any key to Display Main Menu...!\n\n");
-                getch();
+            printf("Press any key to Display Main Menu...!\n\n");
+            getch();
             }
         }
     fclose(fp);
@@ -277,10 +268,7 @@ Name: deposit()
 Function:
         To add fund in Bank Account.
 Definition:
-        void deposit(char mobnum[]);
-Parameters and Arguments:
-        A character array is passed as argument. By comparing this array with file's data (unique mobile number),
-        the function adds user entered fund to account.
+        void deposit();
 Returns:
         Functions returning type void: nothing.
 */
@@ -308,6 +296,7 @@ void deposit()
         }
     else
         {
+        fread(&user, sizeof(user), 1, fp);
         if (strcmp(passwd, user.pass) == 0)
             {
             deposit:
@@ -336,7 +325,7 @@ void deposit()
                 if(fwrite != 0)
                     {
                     printf("\n\nYou have successfully depostied Rs.%d",amount);
-                    printf("\nAvailable Balance: %lf \n", user.balance);
+                    printf("\nAvailable Balance: %.2lfRs\n", user.balance);
                     }
                 }
             }
@@ -362,10 +351,7 @@ Name: deposit()
 Function:
         To withdraw fund in Bank Account.
 Definition:
-        void withdraw(char mobnum[]);
-Parameters and Arguments:
-        A character array is passed as argument. By comparing this array with file's data (unique mobile number),
-        the function subtracts user entered fund from account.
+        void withdraw();
 Returns:
         Functions returning type void: nothing.
 */
@@ -394,6 +380,7 @@ void withdraw ()
         }
     else
         {
+        fread(&user, sizeof(user), 1, fp);
         if (strcmp(passwd, user.pass) == 0)
             {
             withdraw:
@@ -402,7 +389,7 @@ void withdraw ()
             printf("CASH WITHDRAWL!\n\n");
             printf("Hello! %s \n", user.name);
 
-            printf("Available Balance: %lf \n", user.balance);
+            printf("Available Balance: %.2lfRs \n", user.balance);
             printf("Enter the amount to be withdrawn:\n");
             scanf("%d", &amount);
 
@@ -430,7 +417,7 @@ void withdraw ()
                 if(fwrite !=0)
                     {
                     printf("\n\nYou have sucessfully withdrawn Rs.%d",amount);
-                    printf("\nAvailable Balance: %lf \n", user.balance);
+                    printf("\nAvailable Balance: %.2lfRs \n", user.balance);
                     }
                 }
             }
@@ -449,10 +436,7 @@ Name: close()
 Function:
         To close a Bank Account.
 Definition:
-        void close(char mobnum[]);
-Parameters and Arguments:
-        A character array is passed as argument. By comparing this array with file's data (unique mobile number),
-        the function deletes/removes that particular account from file..
+        void close();
 Returns:
         Functions returning type void: nothing.
 */
@@ -464,6 +448,7 @@ void close()
     int amount;
     char num[12];
     char passwd[15];
+    int choice; 
 
     printf("\n---You Selected Account Deletion---\n");
     printf("\nEnter your Registered Mobile Number:\n");
@@ -472,14 +457,15 @@ void close()
     printf("\nEnter your Password:\n");
     scanf("%s", passwd);
 
-    old = fopen(strcat(num, ".txt"), "r+");;
+    old = fopen(strcat(num, ".txt"), "r");;
 
     if (old == NULL)
         {
-        printf("Account Number not registered!\n");
+        printf("\nAccount Number not registered!\n");
         }
     else
         {
+        fread(&user, sizeof(user), 1, old);
         if (strcmp(passwd, user.pass) == 0)
             {
             system("cls");
@@ -487,24 +473,40 @@ void close()
             printf("CLOSE ACCOUNT!\n\n");
             printf("Hello! %s \n", user.name);
 
-            //old = fopen("username.txt","r");
-            new = fopen("new.txt","w");
+            fclose(old);
 
-            while (fscanf(old,"%s %s %s %s %s %s",user.name, user.mob, user.type, user.balance, user.type, user.pass) != EOF)
+            printf("Do you really want to close your account??\n");
+            printf("1. Yes\n");
+            printf("2. No\n");
+            scanf("%d", &choice);
+
+            switch (choice) 
                 {
-                if(strcmp(passwd, user.pass) != 0)
+                case 1:
                     {
-                    fprintf(new,"%s %s %s %s %s %s",user.name, user.mob, user.type, user.balance, user.type, user.pass);
-                    }
-                else
-                    {
+                    remove (num);
                     printf("\n\n Your Account DELETED successfully!\n\n");
+                    break;
+                    }
+                case 2:
+                    {
+                    printf("\nAccount deletion cancelled!!\n\n");
+                    break;
+                    }
+                default:
+                    {
+                    printf("\nInvalid Entry!!\n\n");
+                    printf("\nAccount deletion request is cancelled\n\n");
+                    break;
                     }
                 }
-            fclose(new);
+            }
+        else
+            {
+            printf("\nIncorect Password!!.\n");
             }
         }
-    fclose(old);
-    remove(strcat(num, ".txt"));
-    rename("new.txt", strcat(num, ".txt"));
+
+    printf("\nPress any key to Display Main Menu...!\n\n");
+    getch();
     }
