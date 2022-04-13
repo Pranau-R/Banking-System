@@ -1,0 +1,29 @@
+
+MINI STATEMENT!
+
+WELCOME, Jana
+
+...........................
+==== YOUR ACCOUNT INFO ====
+***************************
+
+NAME: Jana
+Mobile Number: 8888
+Account Type: Sav
+Balance: 0.00Rs
+
+Press any key to Display Main Menu...!
+
+
+======== WELCOME TO MCCI BANK!!! ========
+======== WHAT DO YOU WANT TO DO? ========
+
+1. Open Account:
+2. Account Details:
+3. Deposit Fund:
+4. Withdraw Fund:
+5. Close Account:
+6. Exit:
+
+
+Enter the Choice:
