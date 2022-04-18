@@ -1,0 +1,71 @@
+/'
+Module:	banking_system.plantuml
+Function:
+        PlantUML main source for banking_system.
+
+Copyright:
+        This file copyright (C) 2022 by
+        MCCI Corporation
+        3520 Krums Corners Road
+        Ithaca, NY 14850
+        An unpublished work. All rights reserved.
+        This file is proprietary information, and may not be disclosed or
+        copied without the prior permission of MCCI Corporation.
+
+Author:
+        Pranau R, MCCI Corporation    April 2022
+'/
+
+@startuml
+
+start
+
+:Create a collection of required variables;
+:Create different functions for different operation;
+:Create a Menu with various available operations;
+:Display Menu;
+:Declare a variable for choice;
+:Read choice;
+
+while (when choice is not exit) is (yes)
+
+fork
+
+-> case1;
+:Open Account;
+:A;
+
+fork again
+
+-> case2;
+:Display Account Details;
+:B;
+
+fork again
+
+-> case3;
+:Deposit Fund;
+:C;
+
+fork again
+
+-> case4;
+:Withdraw Fund;
+:D;
+
+fork again
+
+-> case5;
+:Close Account;
+:E;
+
+end fork
+
+:O;
+:Read choice;
+
+end while (no)
+
+stop
+
+@enduml

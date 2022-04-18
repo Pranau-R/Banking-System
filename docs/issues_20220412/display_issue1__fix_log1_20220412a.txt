@@ -1,0 +1,120 @@
+PS E:\Training\GitHub\Banking-System\issue1\Banking-System\src> cd "e:\Training\GitHub\Banking-System\issue1\Banking-System\src\" ; if ($?) { gcc banking_system.c -o banking_system } ; if ($?) { .\banking_system }
+banking_system.c: In function 'display':
+banking_system.c:255:17: warning: implicit declaration of function 'getch'; did you mean 'getc'? [-Wimplicit-function-declaration]
+  255 |                 getch();
+MINI STATEMENT!
+
+WELCOME, Jana
+
+..........................
+==== YOUR ACCOUNT INFO ====
+***************************
+
+NAME: Jana
+Mobile Number: 8888
+Account Type: Sav
+Balance: 0.000000Rs
+
+Press any key to Display Main Menu...!
+
+
+======== WELCOME TO MCCI BANK!!! ========
+======== WHAT DO YOU WANT TO DO? ========
+
+1. Open Account:
+2. Account Details:
+3. Deposit Fund:
+4. Withdraw Fund:
+5. Close Account:
+6. Exit:
+
+
+Enter the Choice:
+2
+
+---You selected Account Details---
+
+
+Enter your Registered Mobile Number:
+8888
+
+Enter your Password:
+17
+the user.mob is:8888
+
+Incorect Password!!.
+Press any key to Display Main Menu...!
+
+
+======== WELCOME TO MCCI BANK!!! ========
+======== WHAT DO YOU WANT TO DO? ========
+
+1. Open Account:
+2. Account Details:
+3. Deposit Fund:
+4. Withdraw Fund:
+5. Close Account:
+6. Exit:
+
+
+Enter the Choice:
+6
+PS E:\Training\GitHub\Banking-System\issue1\Banking-System\src> cd "e:\Training\GitHub\Banking-System\issue1\Banking-System\src\" ; if ($?) { gcc banking_system.c -o banking_system } ; if ($?) { .\banking_system }
+banking_system.c: In function 'display':
+OPEN ACCOUNT!!
+
+
+Enter Name:     Ajay
+
+
+Enter Mobile Number:    1010
+
+
+Enter Account Type:     Fix
+
+
+Enter a Password:       1717
+
+Account Succesfully Created!
+MINI STATEMENT!
+
+WELCOME, Ajay
+
+..........................
+==== YOUR ACCOUNT INFO ====
+***************************
+
+NAME: Ajay
+Mobile Number: 1010
+Account Type: Fix
+Balance: 0.000000Rs
+MINI STATEMENT!
+
+WELCOME, Jana
+
+..........................
+==== YOUR ACCOUNT INFO ====
+***************************
+
+NAME: Jana
+Mobile Number: 8888
+Account Type: Sav
+Balance: 0.000000Rs
+
+Press any key to Display Main Menu...!
+
+
+======== WELCOME TO MCCI BANK!!! ========
+======== WHAT DO YOU WANT TO DO? ========
+
+1. Open Account:
+2. Account Details:
+3. Deposit Fund:
+4. Withdraw Fund:
+5. Close Account:
+6. Exit:
+
+
+Enter the Choice:
+6
+PS E:\Training\GitHub\Banking-System\issue1\Banking-System\src>

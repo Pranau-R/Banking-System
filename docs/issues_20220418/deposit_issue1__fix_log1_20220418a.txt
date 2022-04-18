@@ -1,0 +1,40 @@
+MINI STATEMENT!
+
+WELCOME, Ajay
+
+...........................
+==== YOUR ACCOUNT INFO ====
+***************************
+
+NAME: Ajay
+Mobile Number: 1010
+Account Type: Fixed
+Balance: 7000.00Rs
+
+Press any key to Display Main Menu...!
+
+======== WELCOME TO MCCI BANK!!! ========
+CASH DEPOSIT!
+
+Hello! Ajay
+Enter the amount to be deposited:
+3000
+
+
+You have successfully depostied Rs.3000.00
+Available Balance: 10000.00Rs
+
+Press any key to Display Main Menu...!
+
+CASH WITHDRAWL!
+
+Hello! Ajay
+Available Balance: 10000.00Rs
+Enter the amount to be withdrawn:
+4000
+
+
+You have sucessfully withdrawn Rs.4000.00
+Available Balance: 6000.00Rs
+
+Press any key to Display Main Menu...!

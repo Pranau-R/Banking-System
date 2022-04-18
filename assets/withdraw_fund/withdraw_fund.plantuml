@@ -1,0 +1,42 @@
+/'
+Module:	withdraw_fund.plantuml
+Function:
+        PlantUML source for fund withdrawl.
+
+Copyright:
+        This file copyright (C) 2022 by
+        MCCI Corporation
+        3520 Krums Corners Road
+        Ithaca, NY 14850
+        An unpublished work. All rights reserved.
+        This file is proprietary information, and may not be disclosed or
+        copied without the prior permission of MCCI Corporation.
+
+Author:
+        Pranau R, MCCI Corporation    April 2022
+'/
+
+@startuml
+
+start
+
+:D;
+:Get the amount needed to be withdrawn from user;
+
+if (is amount multiple of 500?) then (yes)
+
+    if (is amount greater than user avail balance?) then (yes)
+    :Print insufficient balance statement;
+
+    else (no)
+    :New balance <- Balance - Withdrawl Amount;
+    :Print a successful message;
+    endif
+
+endif
+
+:Open the existing file;
+:Write the New Balance in it;
+:Close the file;
+
+:O;

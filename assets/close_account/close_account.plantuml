@@ -1,0 +1,39 @@
+/'
+Module:	close_account.plantuml
+Function:
+        PlantUML source for closing an account.
+
+Copyright:
+        This file copyright (C) 2022 by
+        MCCI Corporation
+        3520 Krums Corners Road
+        Ithaca, NY 14850
+        An unpublished work. All rights reserved.
+        This file is proprietary information, and may not be disclosed or
+        copied without the prior permission of MCCI Corporation.
+
+Author:
+        Pranau R, MCCI Corporation    April 2022
+'/
+
+@startuml
+
+start
+
+:E;
+:Get closing account information;
+:Open the existing file;
+:Compare the account information with contents inside file;
+
+if (is account exsits?) then (yes)
+:Over-write the account information with no data;
+:Close file;
+
+else (no)
+:Print error statement;
+
+endif
+
+:O;
+
+@enduml

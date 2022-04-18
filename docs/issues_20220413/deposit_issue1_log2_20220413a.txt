@@ -1,0 +1,11 @@
+CASH DEPOSIT!
+
+Hello! Jana
+Enter the amount to be deposited:
+3000
+
+
+You have successfully depostied Rs.3000
+Available Balance: 3000.00Rs
+
+Press any key to Display Main Menu...!
