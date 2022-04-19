@@ -21,8 +21,8 @@ Author:
 
 struct user
     {
-    char name[20];
-    char mob[12];
+    char name[25];
+    char mob[15];
     char pass[15];
     char type[10];
     double balance;
@@ -56,10 +56,10 @@ void main()
 
     printf("\n");
     printf("--------------------------------------------------------------------------------\n");
-    printf("This is banking_system.exe v1.0.0\n");
+    printf("This is banking_system v1.1.0\n");
     printf("--------------------------------------------------------------------------------\n");
     printf("\n");
-    printf("It can able to create and maintain a Bank Acccount\n");
+    printf("It is used to create and maintain a Bank Acccount\n");
     printf("An interactive menu is given to perform various operations as per user's need. Now...\n\n");
 
     while(1)
@@ -137,21 +137,96 @@ void open ()
     {
     FILE *fp;
     struct user user;
-    char filename[12];
-    user.balance = 0;    
+    char filename[15];
+    char ty[15];
+    user.balance = 0;
+    int c, ch, choice;
 
     system("cls");
 
     printf("OPEN ACCOUNT!!\n");
 
+
+    while ((c = getchar()) != '\n' && c != EOF);
     printf("\n\nEnter Name:\t");
-    scanf("%s", user.name);
+    fgets(user.name, 20, stdin);
+
+    Number:
 
     printf("\n\nEnter Mobile Number:\t");
-    scanf("%s", user.mob);
 
-    printf("\n\nEnter Account Type:\t");
-    scanf("%s", user.type);
+    if (scanf("%12[0123456789]", user.mob) !=1 || strlen(user.mob) != 10)
+        {
+        printf("\nEnter a Valid 10 digit phone number!\n");
+        while ((c = getchar()) != '\n' && c != EOF);
+        goto Number;
+        }
+
+        printf("\n\nAvailable Account Types:\n");
+        printf("1. Savings Account.\n");
+        printf("2. Fixed Account.\n");
+        printf("3. Salary Account.\n");
+
+        printf("\n\nChoose your Account Type [1 or 2 or 3]:\t");
+        scanf("%d", &choice);
+
+        printf("Choice is: %d\n", choice);
+
+        if (choice == 1)
+            {
+            printf("Inside case 1.\n");
+            char ty[15] = "Savings";
+            strcpy (user.type, ty);
+            }
+        else if (choice == 2)
+            {
+            printf("Inside case 2.\n");
+            char ty[15] = "Fixed";
+            strcpy (user.type, ty);
+            }
+        else if (choice == 3)
+            {
+            printf("Inside case 3.\n");
+            char ty[15] = "Salary";
+            strcpy (user.type, ty);
+            }
+        else
+            {
+            printf("Invalid Entry!!\n");
+
+            getchar();
+            }
+        /*switch (choice)
+            {
+            case 1:
+                {
+                printf("Inside case 1.\n");
+                char ty[15] = "Savings";
+                strcpy (user.type, ty);
+                break;
+                }
+            case 2:
+                {
+                printf("Inside case 2.\n");
+                char ty[15] = "Fixed";
+                strcpy (user.type, ty);
+                break;
+                }
+            case 3:
+                {
+                printf("Inside case 3.\n");
+                char ty[15] = "Salary";
+                strcpy (user.type, ty);
+                break;
+                }
+            default:
+                {
+                printf("Invalid Entry!!\n");
+
+                getchar();
+                break;
+                }
+            }*/
 
     printf("\n\nEnter a Password:\t");
     scanf("%s", user.pass);
@@ -193,7 +268,7 @@ void display()
     {
     FILE *fp;
     struct user user;
-    char num[12];
+    char num[15];
     char passwd[15];
 
     printf("\n---You selected Account Details---\n\n");
@@ -225,7 +300,7 @@ void display()
             printf("***************************\n");
             printf("\nNAME: %s", user.name);
 
-            printf("\nMobile Number: %s", user.mob);
+            printf("Mobile Number: %s", user.mob);
 
             printf("\nAccount Type: %s", user.type);
 
@@ -263,7 +338,7 @@ void deposit()
     FILE *fp;
     struct user user;
     double amount;
-    char num[12];
+    char num[15];
     char passwd[15];
 
     printf("\n---You Selected Cash Deposit---\n\n");
@@ -349,7 +424,7 @@ void withdraw ()
     FILE *fp;
     struct user user;
     double amount;
-    char num[12];
+    char num[15];
     char passwd[15];
 
     printf("\n---You Selected Cash Withdrawl---\n");
@@ -449,7 +524,7 @@ void close()
     FILE *old,*new;
     struct user user;
     int amount;
-    char num[12];
+    char num[15];
     char passwd[15];
     int choice; 
 
