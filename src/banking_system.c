@@ -19,6 +19,12 @@ Author:
 #include<stdlib.h>
 #include<math.h>
 
+#ifdef WIN32
+#include <io.h>
+#define F_OK 0
+#define access _access
+#endif
+
 struct user
     {
     char name[25];
@@ -28,11 +34,11 @@ struct user
     double balance;
     };
 
-void open();
-void display();
-void deposit();
-void withdraw();
-void close();
+void open_account();
+void display_details();
+void deposit_fund();
+void withdraw_fund();
+void close_account();
 
 /****************************************************************************\
 |
@@ -81,27 +87,27 @@ void main()
             {
             case 1:
                 {
-                open();
+                open_account();
                 break;
                 }
             case 2:
                 {
-                display();
+                display_details();
                 break;
                 }
             case 3:
                 {
-                deposit();
+                deposit_fund();
                 break;
                 }
             case 4:
                 {
-                withdraw();
+                withdraw_fund();
                 break;
                 }
             case 5:
                 {
-                close();
+                close_account();
                 break;
                 }
             case 6:
@@ -124,16 +130,16 @@ void main()
 \****************************************************************************/
 
 /*
-Name: open()
+Name: open_account()
 Function:
         To get information from user and to open a Bank Account.
 Definition:
-        void open();
+        void open_account();
 Returns:
         Functions returning type void: nothing.
 */
 
-void open ()
+void open_account()
     {
     FILE *fp;
     struct user user;
@@ -162,78 +168,58 @@ void open ()
         goto Number;
         }
 
-        printf("\n\nAvailable Account Types:\n");
-        printf("1. Savings Account.\n");
-        printf("2. Fixed Account.\n");
-        printf("3. Salary Account.\n");
+    strcpy(filename, user.mob);
 
-        printf("\n\nChoose your Account Type [1 or 2 or 3]:\t");
-        scanf("%d", &choice);
+    if (access (strcat(filename, ".txt"), F_OK) == 0)
+        {
+        printf("\nThis account number is already registered.\n");
+        printf("Please enter a New 10 digit mobile number to Register!\n");
+        while ((c = getchar()) != '\n' && c != EOF);
+        goto Number;
+        }
 
-        printf("Choice is: %d\n", choice);
+    printf("\n\nAvailable Account Types:\n");
+    printf("1. Savings Account.\n");
+    printf("2. Fixed Account.\n");
+    printf("3. Salary Account.\n");
 
-        if (choice == 1)
-            {
-            printf("Inside case 1.\n");
-            char ty[15] = "Savings";
-            strcpy (user.type, ty);
-            }
-        else if (choice == 2)
-            {
-            printf("Inside case 2.\n");
-            char ty[15] = "Fixed";
-            strcpy (user.type, ty);
-            }
-        else if (choice == 3)
-            {
-            printf("Inside case 3.\n");
-            char ty[15] = "Salary";
-            strcpy (user.type, ty);
-            }
-        else
-            {
-            printf("Invalid Entry!!\n");
+    printf("\n\nChoose your Account Type [1 or 2 or 3]:\t");
+    scanf("%d", &choice);
 
-            getchar();
-            }
-        /*switch (choice)
-            {
-            case 1:
-                {
-                printf("Inside case 1.\n");
-                char ty[15] = "Savings";
-                strcpy (user.type, ty);
-                break;
-                }
-            case 2:
-                {
-                printf("Inside case 2.\n");
-                char ty[15] = "Fixed";
-                strcpy (user.type, ty);
-                break;
-                }
-            case 3:
-                {
-                printf("Inside case 3.\n");
-                char ty[15] = "Salary";
-                strcpy (user.type, ty);
-                break;
-                }
-            default:
-                {
-                printf("Invalid Entry!!\n");
+    if (choice == 1)
+        {
+        char ty[15] = "Savings";
+        strcpy (user.type, ty);
+        }
+    else if (choice == 2)
+        {
+        char ty[15] = "Fixed";
+        strcpy (user.type, ty);
+        }
+    else if (choice == 3)
+        {
+        char ty[15] = "Salary";
+        strcpy (user.type, ty);
+        }
+    else
+        {
+        printf("Invalid Entry!!\n");
 
-                getchar();
-                break;
-                }
-            }*/
+        getchar();
+        }
+
+    Password:
 
     printf("\n\nEnter a Password:\t");
     scanf("%s", user.pass);
 
-    strcpy(filename, user.mob);
+    if (strlen(user.pass) > 10)
+        {
+        printf("\nPassword should be less than 10 characters!\n");
+        goto Password;
+        }
 
-    fp = fopen(strcat(filename, ".txt"), "wb");
+    fp = fopen(filename, "wb");
 
     fwrite(&user, sizeof(user), 1, fp);
 
@@ -255,16 +241,16 @@ void open ()
 \****************************************************************************/
 
 /*
-Name: display()
+Name: display_details()
 Function:
         To display a mini statement.
 Definition:
-        void display();
+        void display_details();
 Returns:
         Functions returning type void: nothing.
 */
 
-void display()
+void display_details()
     {
     FILE *fp;
     struct user user;
@@ -324,22 +310,24 @@ void display()
 \****************************************************************************/
 
 /*
-Name: deposit()
+Name: deposit_fund()
 Function:
         To add fund in Bank Account.
 Definition:
-        void deposit();
+        void deposit_fund();
 Returns:
         Functions returning type void: nothing.
 */
 
-void deposit()
+void deposit_fund()
     {
     FILE *fp;
     struct user user;
     double amount;
     char num[15];
     char passwd[15];
+    char cash[15];
+    int c;
 
     printf("\n---You Selected Cash Deposit---\n\n");
 
@@ -362,13 +350,18 @@ void deposit()
         if (strcmp(passwd, user.pass) == 0)
             {
             deposit:
+
             system("cls");
 
             printf("CASH DEPOSIT!\n\n");
             printf("Hello! %s \n", user.name);
 
             printf("Enter the amount to be deposited:\n");
-            scanf("%lf", &amount);
+            scanf("%12lf[0123456789]", &amount);
+
+            //fgets(cash, 80, stdin);
+
+            while ((c = getchar()) != '\n' && c != EOF);
 
             if (fmod(amount, 500) != 0)
                 {
@@ -378,6 +371,22 @@ void deposit()
                 getch();
                 goto deposit;
                 }
+            else if (amount > 1000000)
+                {
+                printf("\nSorry... The deposit amount should not exceed 10 lakhs");
+                printf("\nPress any key to redirect to CASH DEPOSIT!...");
+
+                getch();
+                goto deposit;
+                }
+            /*else if (sscanf(cash, "%lf", &amount) == 1)
+                {
+                printf("\nSorry... The deposit amount should only be numbers");
+                printf("\nPress any key to redirect to CASH DEPOSIT!...");
+
+                getch();
+                goto deposit;
+                }*/
             else
                 {
                 user.balance += amount;
@@ -410,16 +419,16 @@ void deposit()
 \****************************************************************************/
 
 /*
-Name: deposit()
+Name: withdraw_fund()
 Function:
         To withdraw fund in Bank Account.
 Definition:
-        void withdraw();
+        void withdraw_fund();
 Returns:
         Functions returning type void: nothing.
 */
 
-void withdraw ()
+void withdraw_fund()
     {
     FILE *fp;
     struct user user;
@@ -427,7 +436,7 @@ void withdraw ()
     char num[15];
     char passwd[15];
 
-    printf("\n---You Selected Cash Withdrawl---\n");
+    printf("\n---You Selected Cash Withdrawal---\n");
 
     printf("\nEnter your Registered Mobile Number:\n");
     scanf("%s", num);
@@ -450,7 +459,8 @@ void withdraw ()
             withdraw:
 
             system("cls");
-            printf("CASH WITHDRAWL!\n\n");
+
+            printf("CASH WITHDRAWAL!\n\n");
             printf("Hello! %s \n", user.name);
 
             printf("Available Balance: %.2lfRs \n", user.balance);
@@ -459,12 +469,20 @@ void withdraw ()
 
             if (user.balance < 500)
                 {
-                printf("\nSorry, Your balance is insufficient for WITHDRAWL!");
+                printf("\nSorry, Your balance is insufficient for WITHDRAWAL!");
                 }
             else if (fmod(amount, 500) != 0)
                 {
                 printf("\nSorry... The amount should be multiple of 500");
-                printf("\n\nPress any key to redirect to CASH WITHDRAWL!...");
+                printf("\n\nPress any key to redirect to CASH WITHDRAWAL!...");
+
+                getch();
+                goto withdraw;
+                }
+            else if (amount > 1000000)
+                {
+                printf("\nSorry... The withdraw amount should not exceed 10 lakhs");
+                printf("\n\nPress any key to redirect to CASH WITHDRAWAL!...");
 
                 getch();
                 goto withdraw;
@@ -473,7 +491,7 @@ void withdraw ()
                 {
                 printf("\nSorry insufficient balance!");
                 printf("\nWithdraw an amount lesser than available balance...");
-                printf("\n\nPress any key to redirect to CASH WITHDRAWL!...");
+                printf("\n\nPress any key to redirect to CASH WITHDRAWAL!...");
 
                 getch();
                 goto withdraw;
@@ -510,16 +528,16 @@ void withdraw ()
 \****************************************************************************/
 
 /*
-Name: close()
+Name: close_account()
 Function:
         To close a Bank Account.
 Definition:
-        void close();
+        void close_account();
 Returns:
         Functions returning type void: nothing.
 */
 
-void close()
+void close_account()
     {
     FILE *old,*new;
     struct user user;
