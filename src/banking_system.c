@@ -152,7 +152,6 @@ void open_account()
 
     printf("OPEN ACCOUNT!!\n");
 
-
     while ((c = getchar()) != '\n' && c != EOF);
     printf("\n\nEnter Name:\t");
     fgets(user.name, 20, stdin);
@@ -190,16 +189,19 @@ void open_account()
         {
         char ty[15] = "Savings";
         strcpy (user.type, ty);
+        printf("\nYou selected Savings Account.\n");
         }
     else if (choice == 2)
         {
         char ty[15] = "Fixed";
         strcpy (user.type, ty);
+        printf("\nYou selected Fixed Account.\n");
         }
     else if (choice == 3)
         {
         char ty[15] = "Salary";
         strcpy (user.type, ty);
+        printf("\nYou selected Salary Account.\n");
         }
     else
         {
@@ -212,6 +214,7 @@ void open_account()
 
     printf("\n\nEnter a Password:\t");
     scanf("%s", user.pass);
+    while ((c = getchar()) != '\n' && c != EOF);
 
     if (strlen(user.pass) > 10)
         {
@@ -223,7 +226,7 @@ void open_account()
 
     fwrite(&user, sizeof(user), 1, fp);
 
-    if(fwrite != 0)
+    if(fprintf > 0)
         {
         printf("\nAccount Succesfully Created!\n\n");
         }
@@ -254,6 +257,7 @@ void display_details()
     {
     FILE *fp;
     struct user user;
+    int d;
     char num[15];
     char passwd[15];
 
@@ -295,6 +299,7 @@ void display_details()
         else
             {
             printf("\nIncorect Password!!.\n");
+
             }
         }
     fclose(fp);
@@ -326,7 +331,6 @@ void deposit_fund()
     double amount;
     char num[15];
     char passwd[15];
-    char cash[15];
     int c;
 
     printf("\n---You Selected Cash Deposit---\n\n");
@@ -358,20 +362,9 @@ void deposit_fund()
 
             printf("Enter the amount to be deposited:\n");
             scanf("%12lf[0123456789]", &amount);
-
-            //fgets(cash, 80, stdin);
-
             while ((c = getchar()) != '\n' && c != EOF);
 
-            if (fmod(amount, 500) != 0)
-                {
-                printf("\nSorry... The amount should be a multiple of 500");
-                printf("\nPress any key to redirect to CASH DEPOSIT!...");
-
-                getch();
-                goto deposit;
-                }
-            else if (amount > 1000000)
+            if (amount > 1000000)
                 {
                 printf("\nSorry... The deposit amount should not exceed 10 lakhs");
                 printf("\nPress any key to redirect to CASH DEPOSIT!...");
@@ -379,14 +372,14 @@ void deposit_fund()
                 getch();
                 goto deposit;
                 }
-            /*else if (sscanf(cash, "%lf", &amount) == 1)
+            else if (amount == 0)
                 {
-                printf("\nSorry... The deposit amount should only be numbers");
+                printf("\nPlease enter an amount to deposit");
                 printf("\nPress any key to redirect to CASH DEPOSIT!...");
 
                 getch();
                 goto deposit;
-                }*/
+                }
             else
                 {
                 user.balance += amount;
@@ -435,6 +428,7 @@ void withdraw_fund()
     double amount;
     char num[15];
     char passwd[15];
+    int c;
 
     printf("\n---You Selected Cash Withdrawal---\n");
 
@@ -466,23 +460,24 @@ void withdraw_fund()
             printf("Available Balance: %.2lfRs \n", user.balance);
             printf("Enter the amount to be withdrawn:\n");
             scanf("%lf", &amount);
+            while ((c = getchar()) != '\n' && c != EOF);
 
-            if (user.balance < 500)
+            if (user.balance == 0)
                 {
                 printf("\nSorry, Your balance is insufficient for WITHDRAWAL!");
-                }
-            else if (fmod(amount, 500) != 0)
-                {
-                printf("\nSorry... The amount should be multiple of 500");
-                printf("\n\nPress any key to redirect to CASH WITHDRAWAL!...");
-
-                getch();
-                goto withdraw;
                 }
             else if (amount > 1000000)
                 {
                 printf("\nSorry... The withdraw amount should not exceed 10 lakhs");
                 printf("\n\nPress any key to redirect to CASH WITHDRAWAL!...");
+
+                getch();
+                goto withdraw;
+                }
+            else if (amount == 0)
+                {
+                printf("\nPlease enter an amount to withdraw");
+                printf("\nPress any key to redirect to CASH WITHDRAWAL!...");
 
                 getch();
                 goto withdraw;
